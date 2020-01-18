@@ -59,7 +59,7 @@ module.exports = (env, { mode }) => ({
     new HtmlWebpackPlugin(
       {
         filename: 'index.html',
-        template: 'template.html'
+        template: './../test/simple.html'
       }
     ),
   ],

@@ -2,9 +2,33 @@
   {
     "country": "France",
     "iso": "FR",
-    "iso2": "",
-    "iso3": "",
+    "iso2": "FR",
+    "iso3": "FRA",
     "flag": "Base64 svg",
-    "phone": ""
+    "phone": "+33"
+  },
+  {
+    "country": "Lorem",
+    "iso": "LM",
+    "iso2": "LRM",
+    "iso3": "LRM",
+    "flag": "Base64 svg",
+    "phone": "+00"
+  },
+  {
+    "country": "Morgulus",
+    "iso": "MR",
+    "iso2": "MR",
+    "iso3": "MOR",
+    "flag": "Base6",
+    "phone": "+01"
+  },
+  {
+    "country": "Pouloulou",
+    "iso": "PL",
+    "iso2": "PL",
+    "iso3": "PLO",
+    "flag": "Base64 svg",
+    "phone": "+456"
   }
 ]
