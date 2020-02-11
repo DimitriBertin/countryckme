@@ -45,6 +45,11 @@ module.exports = (env, { mode }) => ({
           'sass-loader',
         ],
       },
+      // {
+      //   test: /\.(svg)$/,
+      //   use: [
+      //   ],
+      // },
     ],
   },
   plugins: [
