@@ -1,4 +1,5 @@
 {
   "app.js": "/bundle.js",
+  "flags.svg": "/flags.svg",
   "index.html": "/index.html"
 }

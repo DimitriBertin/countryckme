@@ -1,3 +1,22 @@
-@import './reset';
-@import './app';
-@import './widget';
+.countryckme {
+  &__widget {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  &__phone, &__icon, &__country {
+    margin-right: 5px;
+  }
+
+  &__select {
+    // min-width: ;
+    padding: 0px 20px;
+    height: 50px;
+    border: 1px solid #DEDEDE;
+    background: white;
+    border-radius: 0;
+    -webkit-appearance: none;
+  }
+}

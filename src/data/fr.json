@@ -26,5 +26,12 @@
     "iso2": "PL",
     "iso3": "PLO",
     "phone": "+456"
+  },
+  {
+    "country": "Espagne",
+    "iso": "ES",
+    "iso2": "ES",
+    "iso3": "ESP",
+    "phone": "+87655"
   }
 ]

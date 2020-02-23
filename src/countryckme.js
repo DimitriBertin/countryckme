@@ -1,20 +1,38 @@
-const defaultOptions = {
-  lang: 'fr',
-}
+import './styles/styles.scss'
+import { cloneDeep } from 'lodash'
 
-const widgetDefaultOptions = {
-  type: 'simple', // select, customSelect, list
-  flag: true,
-  searchable: true,
-  
+const navLang = navigator.language
+const defaultOptions = {
+  lang: navLang === 'fr-FR' ? 'fr' : 'en',
 }
-// Import 
+/**
+ * Widget Options
+ */
+const widgetDefaultOptions = {
+  type: 'simple', // select, custom, list
+  flag: true,
+  country: false,
+  phone: true,
+  searchable: true,
+  label: {
+    container: '',
+    icon: '',
+    country: '',
+    phone: '',
+    // SELECT
+    selectName: 'countryckme-phone',
+    selectID: 'countryckme-phone',
+    selectClass: '',
+    selectLabel: 'Je suis un label',
+    selectLabelClass: '',
+  }
+}
 export default class CountryckMe {
   constructor(options) {
     this.options = options || {}
     this.options = {
       ...defaultOptions,
-      ...options,
+      ...this.options,
     }
     this.data = require(`./data/${this.options.lang}.json`)
   }
@@ -55,28 +73,29 @@ export default class CountryckMe {
     return this.data
   }
 
-  widget(target, widgetOption, iso = null) {
+  widget(target, options, iso = null) {
     /**
-     * Add options class like this => label: {
-     *  name: '...',
-     *  id: '...',
-     *  classes: '...',
-     * }
+     * @TODO :
+     * ---> PREVENT DEEP COPY
      */
+
+    const widgetOption = cloneDeep({
+      ...widgetDefaultOptions,
+      ...options,
+    })
+
     this.options = {
       ...this.options,
-      widget: {
-        ...widgetDefaultOptions,
-        ...widgetOption,
-      }
+      widget: widgetOption,
     }
+    
+    this.options.widget.label = {
+      ...widgetDefaultOptions.label,
+      ...this.options.widget.label,
+    }
+
     iso = iso || this.options.lang // Choose default lang
-    // Widget -> 
-    /**
-     * select
-     * simple
-     * custom
-     */
+
     let widget = null
     switch (this.options.widget.type) {
       case 'select':
@@ -91,40 +110,61 @@ export default class CountryckMe {
         break;
     }
 
-    // const select = `<select name="${label.select.name}" id="${label.select.id}" class="${label.select.class}">
-    //   ${this.data.map((item) => {
-    //     return `<option value="${item.phone}">${item.country}</option>`
-    //   })}
-    // </select>`
-
     target.innerHTML = widget
   }
 
-  // WIDGET -----
+  /**
+   * Create a select widget
+   */
   getSelectWidget() {
-    const { label } = this.options.widget
-    const select = `<select name="${label.select.name}" id="${label.select.id}" class="${label.select.class}">
+    const { label, country, phone } = this.options.widget
+    const select = `
+    ${label.selectLabel && label.selectLabel !== '' ? `<label for="${label.selectID}" class="countryckme__label ${label.selectLabelClass}">${label.selectLabel}</label>`: '' }
+    <select name="${label.selectName}" id="${label.selectID}" class="countryckme__select ${label.selectClass}">
       ${this.data.map((item) => {
-        return `<option value="${item.phone}">${item.country} ${item.phone}</option>`
+        return `<option value="${item.phone}">${ country ? item.country : ''}${phone ? item.phone : ''}</option>`
       })}
     </select>`
     return select
   }
 
+  /**
+   * Create a custom widget with researchable
+   */
   getCustomWidget() {
-    return 'Custom'
+    const { label, country, phone } = this.options.widget
+    
+    return `
+      <div class="widget countryckme__widget">
+        <div class="fake">
+          <ul>
+          </ul>
+
+          <select name="" id="" class="">
+            
+          </select>
+        </div>
+      </div>
+    `
   }
 
+  /**
+   * 
+   * @param {STRING} iso
+   * Create a simple widget 
+   */ 
   getSimpleWidget(iso) {
     const data = this.data.filter((item) => item.iso.toLowerCase() === iso)
     const item = data[0]
+    const { flag, country, phone, label } = this.options.widget
+
     return `
-    <div class="countryckme__widget">
-      <svg width="30" height="30" focusable="false" aria-hidden="true" class="iccon" xmlns="http://www.w3.org/2000/svg">
+    <div class="countryckme__widget widget ${label.container}">
+      ${ flag ? `<svg width="30" height="30" focusable="false" aria-hidden="true" class="countryckme__icon ${label.icon}" xmlns="http://www.w3.org/2000/svg">
         <use xlink:href="flags.svg#icon-${iso}"></use>
-      </svg>
-      <span class="name">${item.country}</span>
-      <span class="phone">${item.phone}</span>
+      </svg>` : ''}
+      ${ country ? `<span class="countryckme__country ${label.country}">${item.country}</span>` : ''}
+      ${ phone ? `<span class="countryckme__phone ${label.phone}">${item.phone}</span>` : '' }
     </div>`
   }
 }

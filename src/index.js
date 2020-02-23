@@ -1,11 +1,48 @@
-import './styles/styles.scss'
+import './styles/exemples/styles.scss'
 import CountryckMe from './countryckme'
 
-const target = document.querySelector('.add-select-widget')
-const countryckme = new CountryckMe({
-  lang: 'fr',
+const targetSimple = document.querySelector('.countryckme-simple')
+const targetSelect = document.querySelector('.countryckme-select')
+const targetCustom = document.querySelector('.countryckme-custom')
+
+const countryckme = new CountryckMe()
+
+/**
+ * OPTIONS -----> 
+ const widgetDefaultOptions = {
+  type: 'simple',
+  flag: true,
+  country: false,
+  phone: true,
+  searchable: true,
+  label: {
+    container: '',
+    icon: '',
+    country: '',
+    phone: '',
+    // SELECT
+    selectName: 'countryckme-phone',
+    selectID: 'countryckme-phone',
+    selectClass: '',
+    selectLabel: 'Je suis un label',
+    selectLabelClass: '',
+  }
+}
+*/
+
+/** SIMPLE */
+countryckme.widget(targetSimple, {
+  type: 'simple',
+  country: true,
 })
 
-countryckme.widget(target, {
-  type: 'simple',
+/** Select */
+countryckme.widget(targetSelect, {
+  type: 'select',
+})
+
+/** Custom */
+countryckme.widget(targetCustom, {
+  type: 'custom',
+  country: true,
 })

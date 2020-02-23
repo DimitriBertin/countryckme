@@ -6,5 +6,12 @@
     "iso3": "",
     "flag": "Base64 svg",
     "phone": "+455763"
+  },
+  {
+    "country": "Espagne",
+    "iso": "ES",
+    "iso2": "ES",
+    "iso3": "ESP",
+    "phone": "+456"
   }
 ]

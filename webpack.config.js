@@ -3,6 +3,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const StyleLintPlugin = require('stylelint-webpack-plugin')
 const ManifestPlugin = require('webpack-manifest-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CopyPlugin = require('copy-webpack-plugin')
 
 module.exports = (env, { mode }) => ({
   mode,
@@ -45,11 +46,6 @@ module.exports = (env, { mode }) => ({
           'sass-loader',
         ],
       },
-      // {
-      //   test: /\.(svg)$/,
-      //   use: [
-      //   ],
-      // },
     ],
   },
   plugins: [
@@ -67,5 +63,8 @@ module.exports = (env, { mode }) => ({
         template: './../test/simple.html'
       }
     ),
+    new CopyPlugin([
+      { from: 'flags.svg', to: './flags.svg' },
+    ]),
   ],
 })
